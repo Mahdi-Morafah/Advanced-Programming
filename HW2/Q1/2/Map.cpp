@@ -45,17 +45,18 @@ Map::Map(const Map& m){
       index[i][j] = m.index[i][j];
 }
 
-void Map::ShowMap() {
+void Map::showMap() {
   for(int i{}; i < n; i++){
+    std::cout << std::setw(4);
     for(int j{}; j < n; j++)
-      std::cout << std::setw(3) << map[i][j];
+      std::cout << map[i][j] << std::setw(4);
     std::cout << std::endl;
   }
-  for(int i{}; i < n; i++){
-      for(int j{}; j < n; j++)
-	std::cout << std::setw(3) << index[i][j];
-      std::cout << std::endl;
-  }
+}
+
+void Map::showRoute(){
+  std::cout << "Route: " << route << std::endl;
+  
   for(int i{}; i < n; i++){
     for(int j{}; j < n; j++){
       if(index[i][j] == 1)
@@ -65,22 +66,39 @@ void Map::ShowMap() {
     }
     std::cout << std::endl;
   }
-  std::cout << route << std::endl;
-  std::cout << distance << std::endl;
 }
-void Map::FindRoute() {
+
+void Map::findRoute() {
   while(!((row == n-1) & (col == n-1))) {
-    std::cout << "Hello World" << std::endl;
     if((row < n-1) && (col < n-1)){
-      if(std::abs((map[row][col + 1] - map[row][col])) > std::abs((map[row+1][col] - map[row][col]))){
-	distance += std::abs((map[row+1][col] - map[row][col]));
-	row += 1;
-	route += 'd'; 
+      temp1 = std::abs((map[row][col + 1] - map[row][col]));
+      temp2 = std::abs((map[row+1][col] - map[row][col]));
+      temp3 = std::abs((map[row+1][col+1] - map[row][col]));
+      if(temp1 >= temp2){
+	if(temp2 >= temp3){
+	  distance += temp3;
+	  row += 1;
+	  col +=1;
+	  route += '+';
+	}
+	else if(temp2 <= temp3){
+	  distance += temp2;
+	  row += 1;
+	  route += 'd';
+	} 
       }
-      else if(std::abs((map[row][col + 1] - map[row][col])) < std::abs((map[row+1][col] - map[row][col]))){
-	distance += std::abs((map[row][col + 1] - map[row][col]));
-	col += 1;
-	route += 'r';
+      else if(temp1 <= temp2){
+	if(temp1 >= temp3){
+	  distance += temp3;
+	  row += 1;
+	  col += 1;
+	  route += '+';
+	}
+	else if(temp1 <= temp3){
+	  distance += temp1;
+	  col +=1;
+	  route += 'r';
+	}
       }
       index[row][col] = 1;
     }
@@ -100,9 +118,8 @@ void Map::FindRoute() {
       route += 'd';
       distance += std::abs((map[row][col] - map[row-1][col]));
     }
-    std::cout << route << std::endl;
   }
-  std::cout << "THE END" << std::endl;
+  std::cout << "Distance: " << distance << std::endl;
 }
 
 Map::~Map() {

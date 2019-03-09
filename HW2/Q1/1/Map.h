@@ -6,11 +6,12 @@
 
 class Map {
  public:
-  Map(int );
-  Map(const Map& );
+  Map(int);
+  Map(const Map&);
   ~Map();
-  void ShowMap();
-  void FindRoute();
+  void showMap();
+  void showRoute();
+  void findRoute();
 
  private:
   int n{};
@@ -20,9 +21,6 @@ class Map {
   int col{};
   int distance{};
   std::string route{};
-  int temp1{};
-  int temp2{};
-  int temp3{};
 };
 
 #endif

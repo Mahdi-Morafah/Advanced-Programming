@@ -5,10 +5,10 @@ int main(){
   int n{};
   std::cout << "Please Enter the size of your Map" << std::endl;
   std::cin >> n;
-  Map ma{n};
-  ma.ShowMap();
-  ma.FindRoute();
-  ma.ShowMap();
+  Map map{n};
+  map.showMap();
+  map.findRoute();
+  map.showRoute();
 
   return 0;
 }
